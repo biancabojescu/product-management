@@ -1,0 +1,27 @@
+# Environment configuration
+.env
+.env.*
+!.example.env
+
+# Composer dependencies
+/vendor/
+
+# IDE configuration
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+/logs/
+
+# Local temporary files
+/tmp/
+/cache/
+
+# Database dumps
+*.sql
+*.sql.gz

@@ -1,0 +1,9 @@
+{
+    "scripts": {
+        "phinx": "@php vendor/bin/phinx"
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.8",
+        "robmorgan/phinx": "^0.16.12"
+    }
+}
