@@ -25,3 +25,5 @@ Thumbs.db
 # Database dumps
 *.sql
 *.sql.gz
+
+./public/uploads/*
