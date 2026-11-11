@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 use Phinx\Migration\AbstractMigration;
 
-final class CreateProductsTable extends AbstractMigration
+class CreateProductsTable extends AbstractMigration
 {
     /**
      * Change Method.
