@@ -1,33 +1,32 @@
+<form id="createProductForm">
+    <input
+        type="text"
+        name="name"
+        placeholder="Product name"
+        required
+    >
 
-<?php
+    <input
+        type="number"
+        name="price"
+        min="0"
+        step="0.01"
+        placeholder="Price"
+        required
+    >
 
-require_once __DIR__ . '/../config/bootstrap.php';
+    <textarea
+        name="description"
+        placeholder="Description"
+    ></textarea>
 
-use App\Middleware\BasicAuthMiddleware;
+    <input type="file" name="image" accept="image/jpeg,image/png,image/webp">
 
-$response = BasicAuthMiddleware::handle();
+    <input type="date" name="availability_date">
 
-if ($response !== null) {
-    $response->send();
-    exit;
-}
-?>
+    <input type="number" name="stock" min="0" value="0">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Management Dashboard</title>
-</head>
-<body>
-    <header>
-        <h1>Product Management Dashboard</h1>
-    </header>
+    <button type="submit">Create Product</button>
+</form>
 
-    <main>
-        <h2>Products</h2>
-        <p>Welcome to your product management dashboard!</p>
-    </main>
-</body>
-</html>
+<script src="/assets/js/products.js"></script>
