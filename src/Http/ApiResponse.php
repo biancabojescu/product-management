@@ -18,15 +18,20 @@ class ApiResponse
     public static function error(
         string $messageKey,
         int $status = Response::HTTP_BAD_REQUEST,
-    ) {
+        array $details = []
+    ): JsonResponse {
+        $error = [
+            'code' => strtoupper(str_replace('.', '_', $messageKey)),
+            'message' => Lang::get($messageKey),
+        ];
+
+        if ($details !== []) {
+            $error['details'] = $details;
+        }
+
         return new JsonResponse([
             'success' => false,
-            'error' => [
-                'code' => strtoupper(
-                    str_replace('.', '_', $messageKey)
-                ),
-                'message' => Lang::get($messageKey),
-            ],
+            'error' => $error,
         ], $status);
     }
 }
