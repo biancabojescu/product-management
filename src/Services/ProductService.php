@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\DTO\Requests\CreateProductRequest;
+use App\DTO\Requests\GetProductsRequest;
+use App\DTO\Responses\ProductResponse;
+use App\DTO\Responses\PaginatedResult;
 use App\Repositories\ProductRepository;
 use RuntimeException;
 use Throwable;
@@ -13,6 +16,18 @@ class ProductService
         private ProductRepository $productRepository,
         private ImageStorageService $imageStorageService
     ) {}
+
+    public function getAll(GetProductsRequest $request): PaginatedResult
+    {
+        $result = $this->productRepository->getAll($request);
+
+        return new PaginatedResult(
+            array_map(static fn (array $product): ProductResponse => ProductResponse::fromArray($product), $result['items']),
+            $result['total'],
+            $request->page,
+            $request->perPage,
+        );
+    }
 
     public function create(CreateProductRequest $request): bool
     {

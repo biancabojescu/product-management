@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\DTO\Requests\CreateProductRequest;
+use App\DTO\Requests\GetProductsRequest;
 use App\Exceptions\ValidationException;
 use App\Http\ApiResponse;
 use App\Services\ProductService;
@@ -17,6 +18,23 @@ use Throwable;
 class ProductController
 {
     public function __construct(private ProductService $productService) {}
+
+    public function getAll(Request $request): JsonResponse
+    {
+        try {
+            $query = GetProductsRequest::fromRequest($request);
+            return ApiResponse::success($this->productService->getAll($query)->toArray());
+        } catch (ValidationException $e) {
+            $errors = [];
+            foreach ($e->errors() as $field => $messageKey) {
+                $errors[$field] = Lang::get($messageKey);
+            }
+            return ApiResponse::error('general.validation_error', Response::HTTP_UNPROCESSABLE_ENTITY, $errors);
+        } catch (Throwable $e) {
+            error_log((string) $e);
+            return ApiResponse::error('general.server_error', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
     public function store(Request $request): JsonResponse
     {

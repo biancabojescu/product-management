@@ -43,8 +43,9 @@ class ApiKernel
     private function products(Request $request): Response
     {
         return match ($request->getMethod()) {
+            'GET' => $this->productController()->getAll($request),
             'POST' => $this->createProduct($request),
-            default => $this->methodNotAllowed(['POST']),
+            default => $this->methodNotAllowed(['GET', 'POST']),
         };
     }
 
