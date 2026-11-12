@@ -6,6 +6,7 @@ return [
     'auth.unauthorized' => 'Invalid username or password.',
 
     'product.not_found' => 'Product not found.',
+    'validation.product.id' => 'Product ID must be a positive integer within the supported range.',
     'product.created' => 'Product created successfully.',
     'product.updated' => 'Product updated successfully.',
     'product.deleted' => 'Product deleted successfully.',

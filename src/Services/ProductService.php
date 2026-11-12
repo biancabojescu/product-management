@@ -29,6 +29,13 @@ class ProductService
         );
     }
 
+    public function getById(int $id): ?ProductResponse
+    {
+        $product = $this->productRepository->getById($id);
+
+        return $product === null ? null : ProductResponse::fromArray($product);
+    }
+
     public function create(CreateProductRequest $request): bool
     {
         $imagePath = null;

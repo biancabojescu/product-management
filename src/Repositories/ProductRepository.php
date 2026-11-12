@@ -9,6 +9,19 @@ class ProductRepository
 {
     public function __construct(private PDO $pdo) {}
 
+    public function getById(int $id): ?array
+    {
+        $statement = $this->pdo->prepare(
+            'SELECT id, name, description, price, image, availability_date, stock, created_at, updated_at
+                FROM products WHERE id = :id'
+        );
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        $product = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $product === false ? null : $product;
+    }
+
     public function getAll(GetProductsRequest $request): array
     {
         $conditions = [];

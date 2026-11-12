@@ -25,6 +25,13 @@ class ApiKernel
 
             $path = rtrim(parse_url($request->getRequestUri(), PHP_URL_PATH) ?? '/', '/') ?: '/';
 
+            $segments = explode('/', trim($path, '/'));
+            if (count($segments) === 3 && $segments[0] === 'api' && $segments[1] === 'products') {
+                return $request->getMethod() === 'GET'
+                    ? $this->productController()->getById($segments[2])
+                    : $this->methodNotAllowed(['GET']);
+            }
+
             return match ($path) {'/api/products' => $this->products($request),
                 default => ApiResponse::error(
                     'general.not_found',
