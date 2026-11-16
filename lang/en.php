@@ -6,6 +6,7 @@ return [
     'auth.unauthorized' => 'Invalid username or password.',
 
     'product.not_found' => 'Product not found.',
+    'validation.product.create_field' => 'This field cannot be provided or has an unsupported input type.',
     'validation.product.update_field' => 'This field cannot be updated or has an unsupported input type.',
     'validation.product.update_empty' => 'Provide at least one field to update.',
     'validation.product.id' => 'Product ID must be a positive integer within the supported range.',

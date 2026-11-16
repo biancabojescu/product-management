@@ -98,7 +98,7 @@ class ProductService
             $created = $this->productRepository->create([
                 'name' => $request->name,
                 'description' => $request->description,
-                'price' => number_format($request->price, 2, '.', ''),
+                'price' => $request->price,
                 'image' => $imagePath,
                 'availability_date' =>
                     ($request->availabilityDate ?? ProductDate::today())->format('Y-m-d'),
