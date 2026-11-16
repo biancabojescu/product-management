@@ -249,8 +249,8 @@
 textarea.inline-value {
     display: block;
     min-height: 92px;
-    resize: none;
-    overflow: hidden;
+    resize: vertical;
+    overflow-y: auto;
     overflow-wrap: anywhere;
 }
 

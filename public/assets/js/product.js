@@ -78,10 +78,15 @@ function returnToCatalog(notice) {
 
 function resizeDescription() {
     const description = form.elements.namedItem('description');
+    if (!description.getClientRects().length) return;
+
     description.style.height = 'auto';
-    const borders = description.offsetHeight - description.clientHeight;
-    description.style.height = `${Math.max(92, description.scrollHeight + borders)}px`;
+    const styles = getComputedStyle(description);
+    const borders = parseFloat(styles.borderTopWidth) + parseFloat(styles.borderBottomWidth);
+    description.style.height = `${Math.ceil(description.scrollHeight + borders)}px`;
 }
+
+document.fonts.ready.then(resizeDescription);
 
 if (typeof ResizeObserver === 'function') {
     let descriptionWidth = 0;
@@ -149,6 +154,7 @@ function fillProduct(data) {
     state.hidden = true;
     workspace.hidden = false;
     resizeDescription();
+    requestAnimationFrame(resizeDescription);
     updateControls();
 }
 
