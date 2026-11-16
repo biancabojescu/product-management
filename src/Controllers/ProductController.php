@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\DTO\Requests\CreateProductRequest;
+use App\DTO\Requests\UpdateProductRequest;
 use App\DTO\Requests\GetProductsRequest;
 use App\Exceptions\ValidationException;
 use App\Http\ApiResponse;
@@ -18,6 +19,47 @@ use Throwable;
 class ProductController
 {
     public function __construct(private ProductService $productService) {}
+
+    public function delete(string $id): JsonResponse
+    {
+        try {
+            $productId = ctype_digit($id) ? filter_var($id, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) : false;
+            if ($productId === false) {
+                return ApiResponse::error('general.validation_error', Response::HTTP_UNPROCESSABLE_ENTITY, [
+                    'id' => Lang::get('validation.product.id'),
+                ]);
+            }
+            if (!$this->productService->delete($productId)) {
+                return ApiResponse::error('product.not_found', Response::HTTP_NOT_FOUND);
+            }
+
+            return ApiResponse::success(['deleted' => true]);
+        } catch (Throwable $e) {
+            return ApiResponse::error('general.server_error', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function update(Request $request, string $id): JsonResponse
+    {
+        try {
+            $productId = ctype_digit($id) ? filter_var($id, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) : null;
+            if (!$productId) {
+                throw new ValidationException(['id' => 'validation.product.id']);
+            }
+            $product = $this->productService->update($productId, UpdateProductRequest::fromRequest($request));
+            return $product === null
+                ? ApiResponse::error('product.not_found', Response::HTTP_NOT_FOUND)
+                : ApiResponse::success($product->toArray());
+        } catch (ValidationException $e) {
+            $errors = [];
+            foreach ($e->errors() as $field => $messageKey) {
+                $errors[$field] = Lang::get($messageKey);
+            }
+            return ApiResponse::error('general.validation_error', Response::HTTP_UNPROCESSABLE_ENTITY, $errors);
+        } catch (Throwable $e) {
+            return ApiResponse::error('general.server_error', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
     public function getById(string $id): JsonResponse
     {
@@ -37,7 +79,6 @@ class ProductController
 
             return ApiResponse::success($product->toArray());
         } catch (Throwable $e) {
-            error_log((string) $e);
             return ApiResponse::error('general.server_error', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -54,7 +95,6 @@ class ProductController
             }
             return ApiResponse::error('general.validation_error', Response::HTTP_UNPROCESSABLE_ENTITY, $errors);
         } catch (Throwable $e) {
-            error_log((string) $e);
             return ApiResponse::error('general.server_error', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

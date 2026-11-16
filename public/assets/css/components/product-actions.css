@@ -1,0 +1,70 @@
+.actions-column,
+.actions-cell {
+    width: 60px;
+}
+
+.product-actions-toggle {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+}
+
+.product-actions-toggle img {
+    display: block;
+    width: 18px;
+    height: 18px;
+    opacity: .7;
+}
+
+.product-actions-menu {
+    position: fixed;
+    z-index: 15;
+    display: grid;
+    gap: 4px;
+    min-width: 170px;
+    padding: 7px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--surface);
+    box-shadow: 0 8px 28px #17263e26;
+}
+
+.product-action-item {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 5px;
+    text-align: left;
+    text-decoration: none;
+    font: inherit;
+    font-size: 13px;
+    color: var(--text);
+    background: transparent;
+}
+
+.product-action-item:hover,
+.product-action-item:focus-visible {
+    background: #edf3ff;
+    color: var(--accent);
+}
+
+.product-action-delete {
+    background: #fff;
+    color: #c43e34;
+}
+
+.product-action-delete:hover,
+.product-action-delete:focus-visible {
+    background: #fff0ee;
+    color: #c43e34;
+}
+
+tbody tr[data-product-id] > td:not(.actions-cell) {
+    cursor: default;
+}

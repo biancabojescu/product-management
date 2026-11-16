@@ -9,6 +9,74 @@ class ProductRepository
 {
     public function __construct(private PDO $pdo) {}
 
+    public function delete(int $id): ?array
+    {
+        $this->pdo->beginTransaction();
+        try {
+            $lock = $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql' ? ' FOR UPDATE' : '';
+            $statement = $this->pdo->prepare('SELECT image FROM products WHERE id = :id' . $lock);
+            $statement->bindValue(':id', $id, PDO::PARAM_INT);
+            $statement->execute();
+            $product = $statement->fetch(PDO::FETCH_ASSOC);
+            if ($product === false) {
+                $this->pdo->rollBack();
+                return null;
+            }
+
+            $statement = $this->pdo->prepare('DELETE FROM products WHERE id = :id');
+            $statement->bindValue(':id', $id, PDO::PARAM_INT);
+            $statement->execute();
+            $this->pdo->commit();
+
+            return $product;
+        } catch (\Throwable $e) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            throw $e;
+        }
+    }
+
+    public function update(int $id, array $changes): ?array
+    {
+        $allowed = ['name', 'description', 'price', 'stock', 'availability_date', 'image'];
+        if ($changes === [] || array_diff(array_keys($changes), $allowed) !== []) {
+            throw new \InvalidArgumentException('Invalid product update fields.');
+        }
+
+        $this->pdo->beginTransaction();
+        try {
+            $lock = $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql' ? ' FOR UPDATE' : '';
+            $statement = $this->pdo->prepare('SELECT image FROM products WHERE id = :id' . $lock);
+            $statement->bindValue(':id', $id, PDO::PARAM_INT);
+            $statement->execute();
+            $previous = $statement->fetch(PDO::FETCH_ASSOC);
+            if ($previous === false) {
+                $this->pdo->rollBack();
+                return null;
+            }
+
+            $assignments = array_map(static fn (string $field): string => $field . ' = :' . $field, array_keys($changes));
+            $assignments[] = 'updated_at = CURRENT_TIMESTAMP';
+            $statement = $this->pdo->prepare('UPDATE products SET ' . implode(', ', $assignments) . ' WHERE id = :id');
+            foreach ($changes as $field => $value) {
+                $type = $value === null ? PDO::PARAM_NULL : (is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+                $statement->bindValue(':' . $field, $value, $type);
+            }
+            $statement->bindValue(':id', $id, PDO::PARAM_INT);
+            $statement->execute();
+            $product = $this->getById($id);
+            $this->pdo->commit();
+
+            return ['product' => $product, 'previous_image' => $previous['image']];
+        } catch (\Throwable $e) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            throw $e;
+        }
+    }
+
     public function getById(int $id): ?array
     {
         $statement = $this->pdo->prepare(

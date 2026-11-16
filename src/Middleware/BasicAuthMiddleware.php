@@ -11,7 +11,6 @@ class BasicAuthMiddleware {
         $password = $_ENV['DASHBOARD_PASSWORD'] ?? '';
 
         if ($username === '' || $password === '') {
-           error_log('Dashboard credentials are not configured');
            return ApiResponse::error('auth.config_error', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 

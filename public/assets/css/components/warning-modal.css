@@ -1,0 +1,121 @@
+.warning-modal {
+    width: min(430px, calc(100% - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: 0;
+    overflow: auto;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 24px 80px #101d3a40;
+}
+
+.warning-modal::backdrop {
+    background: #101d3a80;
+    backdrop-filter: blur(2px);
+}
+
+.warning-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+}
+
+.warning-content {
+    padding: 28px;
+}
+
+.warning-close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 23px;
+    line-height: 1;
+}
+
+.warning-close:hover {
+    background: #f3f6fa;
+    color: var(--text);
+}
+
+.warning-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.warning-icon {
+    color: #a76613;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.warning-content h2 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    letter-spacing: -.2px;
+}
+
+.warning-content p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.warning-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 18px 28px;
+    border-top: 1px solid var(--border);
+}
+
+.warning-confirm {
+    background: #b66a13;
+    color: #fff;
+}
+
+.warning-confirm:hover {
+    background: #96540b;
+}
+
+.warning-confirm[data-variant="danger"] {
+    background: #c43e34;
+    color: #fff;
+}
+
+.warning-confirm[data-variant="danger"]:hover {
+    background: #a72c25;
+}
+
+@media (max-width: 640px) {
+    .warning-header {
+        padding: 16px 24px;
+    }
+
+    .warning-content {
+        padding: 24px;
+    }
+
+    .warning-actions {
+        padding: 16px 24px;
+    }
+
+    .warning-actions .button {
+        flex: 1;
+    }
+}

@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use App\Support\ImageValidator;
+use App\Support\ProductDate;
 
 final readonly class CreateProductRequest
 {
@@ -65,9 +66,10 @@ final readonly class CreateProductRequest
             }
         }
 
-        $availabilityDate = null;
+        $availabilityDate = ProductDate::today();
 
         if ($date !== null && $date !== '') {
+            $availabilityDate = null;
             if (is_string($date) && !str_contains($date, "\0")) {
                 $availabilityDate = DateTimeImmutable::createFromFormat('!Y-m-d', $date);
             }
@@ -77,7 +79,11 @@ final readonly class CreateProductRequest
             }
         }
 
-        if (!is_int($stock) || $stock < 0) {
+        $stock = (is_int($stock) || (is_string($stock) && ctype_digit($stock)))
+            ? filter_var($stock, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0, 'max_range' => 4294967295]])
+            : false;
+
+        if ($stock === false) {
             $errors['stock'] = 'validation.product.stock';
         }
 

@@ -20,7 +20,6 @@ final readonly class ProductResponse
 
     public static function fromArray(array $product): self
     {
-        // DECIMAL is fetched as a string by PDO; pad without converting to float.
         $parts = explode('.', (string) $product['price'], 2);
         $price = $parts[0] . '.' . str_pad($parts[1] ?? '', 2, '0');
 

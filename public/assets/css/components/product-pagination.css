@@ -1,0 +1,40 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.pagination > span {
+    margin-right: 10px;
+    color: var(--muted);
+}
+
+.pagination .button {
+    min-height: 34px;
+    padding: 7px 11px;
+    font-size: 12px;
+    background: transparent;
+}
+
+.pagination-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+}
+
+.pagination-icon-next {
+    transform: rotate(180deg);
+}
+
+.pagination .button:disabled .pagination-icon {
+    opacity: .3;
+}
+
+@media (max-width: 640px) {
+    .pagination {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+}

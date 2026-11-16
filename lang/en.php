@@ -6,6 +6,8 @@ return [
     'auth.unauthorized' => 'Invalid username or password.',
 
     'product.not_found' => 'Product not found.',
+    'validation.product.update_field' => 'This field cannot be updated or has an unsupported input type.',
+    'validation.product.update_empty' => 'Provide at least one field to update.',
     'validation.product.id' => 'Product ID must be a positive integer within the supported range.',
     'product.created' => 'Product created successfully.',
     'product.updated' => 'Product updated successfully.',
@@ -15,7 +17,7 @@ return [
     'validation.product.description' => 'Description must be valid text.',
     'validation.product.price' => 'Price must be a valid non-negative amount with at most two decimals.',
     'validation.product.image' => 'Image must be a valid JPG, PNG or WebP file, with a maximum size of 2 MB.',
-    'validation.product.availability_date' => 'Availability date must be a valid date in YYYY-MM-DD format.',
+    'validation.product.availability_date' => 'Availability date must be a valid date.',
     'validation.product.stock' => 'Stock must be a non-negative integer.',
     'validation.product.status' => 'Status must be active or inactive.',
 
@@ -26,7 +28,7 @@ return [
     'validation.products.price' => 'Price must be between 0 and 99999999.99 with at most two decimals.',
     'validation.products.price_range' => 'Maximum price must be greater than or equal to minimum price.',
     'validation.products.in_stock' => 'In stock must be true or false.',
-    'validation.products.available_on' => 'Available on must be a valid date in YYYY-MM-DD format between 1000-01-01 and 9999-12-31.',
+    'validation.products.available_on' => 'Available on must be a valid date between 01/01/1000 and 31/12/9999.',
     'validation.products.sort_by' => 'Sort by must be created_at, name or price.',
     'validation.products.sort_direction' => 'Sort direction must be asc or desc.',
     'general.validation_error' => 'Invalid input data.',

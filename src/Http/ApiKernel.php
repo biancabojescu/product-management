@@ -27,9 +27,12 @@ class ApiKernel
 
             $segments = explode('/', trim($path, '/'));
             if (count($segments) === 3 && $segments[0] === 'api' && $segments[1] === 'products') {
-                return $request->getMethod() === 'GET'
-                    ? $this->productController()->getById($segments[2])
-                    : $this->methodNotAllowed(['GET']);
+                return match ($request->getMethod()) {
+                    'GET' => $this->productController()->getById($segments[2]),
+                    'DELETE' => $this->productController()->delete($segments[2]),
+                    'PATCH', 'POST' => $this->updateProduct($request, $segments[2]),
+                    default => $this->methodNotAllowed(['GET', 'PATCH', 'POST', 'DELETE']),
+                };
             }
 
             return match ($path) {'/api/products' => $this->products($request),
@@ -54,6 +57,27 @@ class ApiKernel
             'POST' => $this->createProduct($request),
             default => $this->methodNotAllowed(['GET', 'POST']),
         };
+    }
+
+    private function updateProduct(Request $request, string $id): Response
+    {
+        $contentType = $request->getMethod() === 'PATCH' ? 'application/json' : 'multipart/form-data';
+        $error = RequestValidationMiddleware::validate($request, $contentType);
+        if ($error !== null) {
+            return $error;
+        }
+        if ($contentType === 'application/json') {
+            try {
+                $data = json_decode($request->getContent(), false, 512, JSON_THROW_ON_ERROR);
+            } catch (\JsonException $e) {
+                return ApiResponse::error('general.invalid_json', Response::HTTP_BAD_REQUEST);
+            }
+            if (!$data instanceof \stdClass) {
+                return ApiResponse::error('general.invalid_json', Response::HTTP_BAD_REQUEST);
+            }
+            $request->request->replace((array) $data);
+        }
+        return $this->productController()->update($request, $id);
     }
 
     private function createProduct(Request $request): Response

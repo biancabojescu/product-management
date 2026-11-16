@@ -6,7 +6,6 @@ namespace App\DTO\Responses;
 
 final readonly class PaginatedResult
 {
-    /** @param list<ProductResponse> $items */
     public function __construct(
         public array $items,
         public int $total,

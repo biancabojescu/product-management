@@ -1,0 +1,238 @@
+body.modal-open {
+    overflow: hidden;
+}
+
+.product-modal {
+    width: min(600px, calc(100% - 32px));
+    max-height: calc(100dvh - 48px);
+    padding: 0;
+    overflow: auto;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 24px 80px #101d3a40;
+}
+
+.product-modal::backdrop {
+    background: #101d3a99;
+    backdrop-filter: blur(3px);
+}
+
+.product-form {
+    margin: 0;
+}
+
+.modal-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 28px 18px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-heading h2 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: -.5px;
+}
+
+.modal-close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 25px;
+    line-height: 1;
+}
+
+.modal-close:hover:not(:disabled) {
+    color: var(--text);
+}
+
+.modal-body {
+    display: grid;
+    gap: 20px;
+    padding: 26px 28px;
+}
+
+.modal-notifications:empty {
+    display: none;
+}
+
+.modal-field-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.required-mark {
+    color: #bd4238;
+}
+
+.optional-label {
+    margin-left: 5px;
+    color: #8994a5;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.product-form input,
+.product-form textarea {
+    width: 100%;
+    min-height: 45px;
+    padding: 11px 12px;
+    border: 1px solid #dce3ed;
+    border-radius: 8px;
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.product-form input:hover,
+.product-form textarea:hover {
+    border-color: #bac8db;
+}
+
+.product-form input:focus,
+.product-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
+    box-shadow: 0 0 0 3px #2459d31a;
+}
+
+.product-form textarea {
+    resize: vertical;
+    min-height: 105px;
+    line-height: 1.6;
+}
+
+.product-form input:disabled,
+.product-form textarea:disabled {
+    opacity: .7;
+}
+
+.product-form [aria-invalid="true"] {
+    border-color: #c44338;
+}
+
+.field-hint {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.image-upload {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    border: 1px dashed #cbd7e7;
+    border-radius: 10px;
+    background: #fbfcfe;
+}
+
+.upload-preview {
+    flex-shrink: 0;
+    width: 76px;
+    height: 76px;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.upload-controls {
+    min-width: 0;
+    flex: 1;
+}
+
+.product-form input[type="file"] {
+    padding: 0;
+    min-height: 0;
+    border: 0;
+    background: transparent;
+    font-size: 11px;
+}
+
+.product-form input[type="file"]::file-selector-button {
+    margin-right: 10px;
+    padding: 8px 10px;
+    border: 1px solid #d8e0e9;
+    border-radius: 6px;
+    color: #42516a;
+    background: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.remove-image {
+    margin-top: 7px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #bd4238;
+    font-size: 11px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.modal-actions {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 18px 28px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.save-status {
+    margin-right: auto;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 640px) {
+    .product-modal {
+        max-height: calc(100dvh - 24px);
+    }
+
+    .modal-heading {
+        padding: 22px 20px 18px;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-field-row {
+        gap: 12px;
+    }
+
+    .modal-actions {
+        padding: 16px 20px;
+    }
+
+    .image-upload {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .upload-preview {
+        width: 56px;
+        height: 56px;
+    }
+}

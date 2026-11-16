@@ -1,0 +1,122 @@
+.sort-menu {
+    position: relative;
+}
+
+.sort-toggle {
+    min-height: 44px;
+}
+
+.sort-toggle[aria-expanded="true"] {
+    color: var(--accent);
+    border-color: #b9cdf8;
+    background: #eef4ff;
+}
+
+.sort-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 0;
+}
+
+.sort-icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.sort-chevron {
+    width: 6px;
+    height: 6px;
+    margin: -3px 2px 0 4px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform .15s;
+}
+
+.sort-toggle[aria-expanded="true"] .sort-chevron {
+    margin-top: 3px;
+    transform: rotate(225deg);
+}
+
+.sort-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    z-index: 5;
+    width: 245px;
+    max-height: min(400px, max(180px, calc(100dvh - 340px)));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--surface);
+    border: 1px solid #dce4f0;
+    border-radius: 12px;
+    box-shadow: 0 14px 45px #17263e24, 0 3px 8px #17263e0a;
+}
+
+.sort-options {
+    min-width: 0;
+    margin: 0;
+    padding: 8px;
+    border: 0;
+}
+
+.sort-options legend {
+    padding: 16px 10px 8px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.sort-option {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 12px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.sort-option:hover,
+.sort-option:focus-within {
+    background: #f0f5ff;
+}
+
+.sort-option input {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    accent-color: var(--accent);
+}
+
+.sort-option input:checked + span {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+@media (max-width: 640px) {
+    .sort-menu {
+        position: static;
+    }
+
+    .sort-toggle {
+        padding-inline: 11px;
+        font-size: 12px;
+    }
+
+    .sort-dropdown {
+        top: calc(100% - 4px);
+        left: 12px;
+        right: 12px;
+        width: auto;
+    }
+}
