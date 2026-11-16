@@ -105,14 +105,10 @@ When prompted, enter the credentials configured in `DASHBOARD_USERNAME` and `DAS
 
 ### Apache / Laragon Setup
 
-When using Apache or Laragon:
+- Configure the document root to point to the `public/` directory.
+- Ensure Apache's `mod_rewrite` module is enabled.
 
-- Set the document root to the `public/` directory.
-- Enable Apache's `mod_rewrite` module.
-- Allow `.htaccess` overrides through the appropriate `AllowOverride` configuration.
-
-URL routing is handled through `public/.htaccess`.
-
+Application routing is configured in `public/.htaccess`.
 
 
 ## Usage
