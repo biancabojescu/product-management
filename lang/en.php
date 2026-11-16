@@ -36,4 +36,5 @@ return [
     'general.invalid_content_type' => 'Unsupported request content type.',
     'general.forbidden_origin' => 'Request origin or headers are not allowed.',
     'general.method_not_allowed' => 'HTTP method not allowed.',
+    'general.not_found' => 'Translation not found.',
 ];
