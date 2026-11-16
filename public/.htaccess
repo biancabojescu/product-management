@@ -1,6 +1,12 @@
 RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# Serve existing files and directories directly.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route API requests and product pages before the catalog fallback.
+RewriteRule ^api/ api.php [L,QSA]
+RewriteRule ^products?/[^/]+/?$ product.php [L,QSA]
 
 RewriteRule ^ index.php [L,QSA]

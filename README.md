@@ -107,8 +107,11 @@ When prompted, enter the credentials configured in `DASHBOARD_USERNAME` and `DAS
 
 - Configure the document root to point to the `public/` directory.
 - Ensure Apache's `mod_rewrite` module is enabled.
+- Allow rewrite directives from `.htaccess` for that directory using `AllowOverride FileInfo` (or `AllowOverride All`).
 
-Application routing is configured in `public/.htaccess`.
+Application routing is configured in `public/.htaccess`: existing files and directories are served directly, `/api/*` requests go to `api.php`, and `/products/{id}` requests go to `product.php`. Other requests fall back to the catalog in `index.php`.
+
+If you manage the Apache VirtualHost configuration, you can move these rules into its `<Directory>` block and use `AllowOverride None` instead of keeping a `.htaccess` file. Removing `.htaccess` without equivalent server rules will break the application's clean URLs.
 
 
 ## Usage
